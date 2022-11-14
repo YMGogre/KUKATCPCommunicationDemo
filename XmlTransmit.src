@@ -1,0 +1,126 @@
+&ACCESS RV
+&REL 1
+&PARAM DISKPATH = KRC:\R1\Program
+&PARAM SensorITMASK = *
+&PARAM TEMPLATE = C:\KRC\Roboter\Template\vorgabe
+DEF XmlTransmit( )
+;FOLD Declaration
+  INT i
+  INT valueInt
+  DECL EKI_STATUS RET
+  REAL valueReal
+  BOOL valueBOOL
+  FRAME valueFrame
+;ENDFOLD (Declaration)
+;FOLD Communicated data
+;FOLD receive from external program
+; <Sensor>
+  ; <Message>Example message</Message>
+  ; <Positions>
+    ; <Current X="4645.2" />
+    ; <Before>
+      ; <X>0.9842</X>
+    ; </Before>
+  ; </Positions>
+  ; <Nmb>8</Nmb>
+  ; <Status>
+    ; <IsActive>1</IsActive>
+  ; </Status>
+  ; <Read>
+    ; <xyzabc X="210.3" Y="825.3" Z="234.3" A="84.2" B="12.3" C="43.5" />
+  ; </Read>
+  ; <Show error="0" temp="9929">Taginfo in attributes</Show>
+  ; <Free>2912</Free>
+; </Sensor>
+;ENDFOLD (Receive from external program)
+;FOLD Send to external program
+; <Robot>
+  ; <Data>
+    ; <ActPos X="1000.12">
+    ; </ActPos>
+       ; <LastPos A="..." B="..." C="..." X="..." Y="..." Z="...">
+    ; </LastPos>
+  ; </Data>
+  ; <Mode>ConnectSensor</Mode>
+  ; <RobotLamp>
+    ; <GrenLamp>
+      ; <LightOn>1</LightOn>
+    ; </GrenLamp>
+  ; </RobotLamp>
+  ; <Status>12345678</Status>
+; </Robot>
+;ENDFOLD (Send to external program)
+;ENDFOLD (Communicated data)
+;FOLD INI  
+  ;FOLD BASISTECH INI  
+  BAS (#INITMOV,0 )
+  ;ENDFOLD (BASISTECH INI)
+  ;FOLD USER INI
+    ;Make your modifications here
+  ;ENDFOLD (USER INI)
+;ENDFOLD (INI)
+;FOLD Initialize sample data
+  FOR i=(1) TO (256)  
+    valueChar[i]=0
+  ENDFOR 
+  valueInt=0
+  valueReal=0.0
+  valueFrame={X 0.0,Y 0.0,Z 0.0,A 0.0,B 0.0,C 0.0}
+  valueBOOL=FALSE
+;ENDFOLD (Initialize sample data)
+
+RET=EKI_Init("XmlTransmit")
+RET=EKI_Open("XmlTransmit")
+
+;FOLD Write data to connection
+  ; Write frame to <LastPos X="" Y="" Z="" A="" B="" C="" />
+  RET=EKI_SetFrame("XmlTransmit","Robot/Data/LastPos", TOOL_DATA[1])
+  ; Write real to <ActPos X="" />
+  RET=EKI_SetReal("XmlTransmit","Robot/Data/ActPos/@X", 1000.12)
+  ; Write int to <Status></Status>
+  RET=EKI_SetInt("XmlTransmit","Robot/Status", 12345678)
+  ; Write string to <Mode></Mode>
+  RET=EKI_SetString("XmlTransmit","Robot/Mode","ConnectSensor")
+  ; Write bool to <LightOn></LightOn>
+  RET=EKI_SetBool("XmlTransmit","Robot/RobotLamp/GrenLamp/LightOn",true)
+;ENDFOLD (Write data to connection)
+;FOLD Send data to external program
+  RET = EKI_Send("XmlTransmit","Robot")
+  WAIT SEC 1
+;ENDFOLD (Send data to external program)
+
+FOR i = 1 TO 256 STEP 1
+   ;insert your code here
+   valueChar[i] = 0
+ENDFOR
+
+;FOLD WAIT FOR ( FLAG 1 '' )  ;%{PE}
+;FOLD Parameters ;%{h}
+;Params IlfProvider=kukaroboter.basistech.inlineforms.logics.waitfor; Kuka.WaitLogicTerm1=None; Kuka.WaitForNot1=False; Kuka.WaitLogicOp2.Term1=None; Kuka.WaitForNot2.Term1=False; Kuka.WaitForSysVar2.Term1=FLAG; Kuka.WaitForIndex2.Term1=1; Kuka.WaitForIndexName2.Term1=; Kuka.WaitForTermNumbers=1; Kuka.WaitForOpNumbers=2; Kuka.WaitForCont=False
+;ENDFOLD
+WAIT FOR  ( $FLAG[1] )
+;ENDFOLD
+;FOLD Get received sensor data
+  ; Get string in <Message>Example message</Message>
+  ;RET=EKI_GetString("XmlTransmit","Sensor/X",valueChar[])
+  ; Get real value in <Current X="4645.2" />
+  ;RET=EKI_GetReal("XmlTransmit","Sensor/X",Nmb)
+  ; Get int value in <Nmb>8</Nmb>, 别忘了要先在系统文件 $CONFIG.DAT 声明全局变量Nmb!
+  RET=EKI_GetInt("XmlTransmit","Sensor/X",Nmb)
+  ; Get bool value in textnode <IsActive>1</IsActive>
+  ;RET=EKI_GetBool("XmlTransmit","Sensor/X" ,Nmb)
+  ; Get bool value in attribute <Show error="0" />
+  ;RET=EKI_GetBool("XmlTransmit","Sensor/X" ,Nmb)
+  ; Get frame in <xyzabc X="210.3" Y="825.3" Z="234.3" A="84.2" B="12.3" C="43.5" />
+  ;RET=EKI_GetFrame("XmlTransmit","Sensor/X",Nmb)
+;ENDFOLD (Get received sensor data)
+
+;FOLD WAIT Time= 5.0 sec ;%{PE}
+;FOLD Parameters ;%{h}
+;Params IlfProvider=kukaroboter.basistech.inlineforms.logics.wait; Time=5.0
+;ENDFOLD
+WAIT SEC 5.0
+;ENDFOLD
+RET=EKI_Close("XmlTransmit")
+RET=EKI_Clear("XmlTransmit")
+END
