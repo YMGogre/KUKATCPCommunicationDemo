@@ -1,0 +1,29 @@
+<ETHERNETKRL>
+	<CONFIGURATION>
+		<EXTERNAL>
+			<IP>10.52.7.168</IP>
+			<PORT>59152</PORT>
+		</EXTERNAL>
+	</CONFIGURATION>
+	<RECEIVE>
+		<XML>
+
+			<ELEMENT Tag="Sensor/X" Type="INT" Set_Flag="1"/>
+
+		</XML>
+	</RECEIVE>
+	<SEND>
+		<XML>
+			<ELEMENT Tag="Robot/Data/LastPos/@X"/>
+			<ELEMENT Tag="Robot/Data/LastPos/@Y"/>
+			<ELEMENT Tag="Robot/Data/LastPos/@Z"/>
+			<ELEMENT Tag="Robot/Data/LastPos/@A"/>
+			<ELEMENT Tag="Robot/Data/LastPos/@B"/>
+			<ELEMENT Tag="Robot/Data/LastPos/@C"/>
+			<ELEMENT Tag="Robot/Data/ActPos/@X"/>
+			<ELEMENT Tag="Robot/Status"/>
+			<ELEMENT Tag="Robot/Mode"/>
+			<ELEMENT Tag="Robot/RobotLamp/GrenLamp/LightOn"/>			
+		</XML>
+	</SEND>
+</ETHERNETKRL>
