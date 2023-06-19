@@ -27,12 +27,18 @@ namespace WindowsFormsTestApp
 
         private void TcpClient_OnDisconnected(object sender, STTech.BytesIO.Core.DisconnectedEventArgs e)
         {
-            tbReceive.AppendText($"[{DateTime.Now}] {"断开连接"}\n");
+            this.Invoke(new Action(() =>
+            {
+                tbReceive.AppendText($"[{DateTime.Now}] {"断开连接"}\n");
+            }));
         }
 
         private void TcpClient_OnConnectedSuccessfully(object sender, STTech.BytesIO.Core.ConnectedSuccessfullyEventArgs e)
         {
-            tbReceive.AppendText($"[{DateTime.Now}] {"成功建立连接"}\n");
+            this.Invoke(new Action(() =>
+            {
+                tbReceive.AppendText($"[{DateTime.Now}] {"成功建立连接"}\n");
+            }));
         }
 
         private void TcpClient_OnDataReceived(object sender, STTech.BytesIO.Core.DataReceivedEventArgs e)
@@ -62,13 +68,19 @@ namespace WindowsFormsTestApp
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            tcpClient.Send(tbSend.Text.GetBytes());                         //默认UTF-8编码，但TCP调试工具那边是GBK编码，所以使用TCP调试工具调试时，改为"GetBytes("GBK")"
-            tbReceive.AppendText($"[{DateTime.Now}] {"发送数据："}" + tbSend.Text + "\n");
-            tbSend.Clear();
+            tcpClient.Send(tbSend.Text.GetBytes());                         //默认UTF-8编码，但TCP调试工具那边是GBK编码，所以使用TCP调试工具调试时，此句代码改为"GetBytes("GBK")"
+            this.Invoke(new Action(() =>
+            {
+                tbReceive.AppendText($"[{DateTime.Now}] {"发送数据："}" + tbSend.Text + "\n");
+                tbSend.Clear();
+            }));
         }
         private void print(string msg)
         {
-            tbReceive.AppendText($"[{DateTime.Now}] {msg}\n");      //在打印接收到的数据之前先打印下当前时间
+            this.Invoke(new Action(() =>
+            {
+                tbReceive.AppendText($"[{DateTime.Now}] {msg}\n");      //在打印接收到的数据之前先打印下当前时间
+            }));
         }
 
         private int ByteArrToInt(ref uint b, byte[] byteArr)
@@ -85,6 +97,14 @@ namespace WindowsFormsTestApp
             value = (short)(byteArr[b + 1] * 256 + byteArr[b]);
             b += 2;
             return value;
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            this.Invoke(new Action(() =>
+            {
+                tbReceive.Clear();
+            }));
         }
     }
 }

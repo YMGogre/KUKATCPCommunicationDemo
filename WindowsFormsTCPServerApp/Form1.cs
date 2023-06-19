@@ -88,5 +88,12 @@ namespace WindowsFormsTCPServerApp
             print($"向所有接入客户端发送：{tbSend.Text}");
             tbSend.Clear();
         }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            this.Invoke(new Action(() => {
+                tbLog.Clear();
+            }));
+        }
     }
 }

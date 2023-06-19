@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
+            this.components = new System.ComponentModel.Container();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tsmi_Start = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmi_Close = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,8 +39,11 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbSend = new System.Windows.Forms.RichTextBox();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -101,10 +105,10 @@
             // 
             // btnSend
             // 
-            this.btnSend.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSend.Location = new System.Drawing.Point(722, 17);
+            this.btnSend.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSend.Location = new System.Drawing.Point(0, 0);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 80);
+            this.btnSend.Size = new System.Drawing.Size(102, 36);
             this.btnSend.TabIndex = 6;
             this.btnSend.Text = "发送";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -113,7 +117,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tbSend);
-            this.groupBox1.Controls.Add(this.btnSend);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox1.Location = new System.Drawing.Point(0, 350);
             this.groupBox1.Name = "groupBox1";
@@ -127,9 +131,30 @@
             this.tbSend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSend.Location = new System.Drawing.Point(3, 17);
             this.tbSend.Name = "tbSend";
-            this.tbSend.Size = new System.Drawing.Size(719, 80);
+            this.tbSend.Size = new System.Drawing.Size(692, 80);
             this.tbSend.TabIndex = 7;
             this.tbSend.Text = "";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClear.Location = new System.Drawing.Point(0, 36);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(102, 44);
+            this.btnClear.TabIndex = 8;
+            this.btnClear.Text = "清空日志框";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnClear);
+            this.panel1.Controls.Add(this.btnSend);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(695, 17);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(102, 80);
+            this.panel1.TabIndex = 9;
             // 
             // FormTCPServer
             // 
@@ -145,6 +170,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,6 +188,8 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox tbSend;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

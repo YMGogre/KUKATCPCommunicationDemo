@@ -39,10 +39,13 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.tbSend = new System.Windows.Forms.RichTextBox();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -120,8 +123,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnSend);
             this.groupBox3.Controls.Add(this.tbSend);
+            this.groupBox3.Controls.Add(this.panel1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox3.Location = new System.Drawing.Point(200, 346);
             this.groupBox3.Name = "groupBox3";
@@ -132,10 +135,10 @@
             // 
             // btnSend
             // 
-            this.btnSend.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSend.Location = new System.Drawing.Point(411, 17);
+            this.btnSend.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnSend.Location = new System.Drawing.Point(0, 0);
             this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 80);
+            this.btnSend.Size = new System.Drawing.Size(95, 38);
             this.btnSend.TabIndex = 1;
             this.btnSend.Text = "发送";
             this.btnSend.UseVisualStyleBackColor = true;
@@ -146,9 +149,30 @@
             this.tbSend.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSend.Location = new System.Drawing.Point(3, 17);
             this.tbSend.Name = "tbSend";
-            this.tbSend.Size = new System.Drawing.Size(483, 80);
+            this.tbSend.Size = new System.Drawing.Size(388, 80);
             this.tbSend.TabIndex = 0;
             this.tbSend.Text = "";
+            // 
+            // btnClear
+            // 
+            this.btnClear.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClear.Location = new System.Drawing.Point(0, 38);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(95, 42);
+            this.btnClear.TabIndex = 2;
+            this.btnClear.Text = "清空日志框";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnClear);
+            this.panel1.Controls.Add(this.btnSend);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(391, 17);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(95, 80);
+            this.panel1.TabIndex = 3;
             // 
             // FormTCPClient
             // 
@@ -166,6 +190,7 @@
             this.toolStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -182,6 +207,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.RichTextBox tbSend;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
