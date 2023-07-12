@@ -1,0 +1,23 @@
+<ETHERNETKRL>
+	<CONFIGURATION>
+		<EXTERNAL>
+			<IP>172.31.1.160</IP>		<!-- 机器人控制系统要连接的外部服务器的 IP 地址 -->
+			<PORT>59152</PORT>			<!-- 机器人控制系统要连接的外部服务器的端口号 -->
+		</EXTERNAL>
+	</CONFIGURATION>
+	<RECEIVE>
+		<XML>
+			<!-- 当上位机发来的数据时，flag 1 将置位，
+			在 KRL 代码中，可通过 wait for 语句等待标志位。
+			（如果通过 Set_Out/Set_Flag 设置一个输
+			出端或插上一个旗标，那么程序代码中的相应
+			系统变量 $OUT[]/$FLAG[] 必须被重新复位） -->
+			<ELEMENT Tag="Ext/Msg" Type="STRING" Set_Flag="1"/>
+		</XML>
+	</RECEIVE>
+	<SEND>
+		<XML>
+			<ELEMENT Tag="Robot/Ack" />
+		</XML>
+	</SEND>
+</ETHERNETKRL>

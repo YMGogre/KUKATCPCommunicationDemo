@@ -1,0 +1,75 @@
+﻿DEF  ServerDemo ( )
+DECL EKI_STATUS RET
+INT i
+;FOLD INI;%{PE}
+  ;FOLD BASISTECH INI
+    GLOBAL INTERRUPT DECL 3 WHEN $STOPMESS==TRUE DO IR_STOPM ( )
+    INTERRUPT ON 3 
+    BAS (#INITMOV,0 )
+  ;ENDFOLD (BASISTECH INI)
+  ;FOLD USER INI
+    ;Make your modifications here
+
+  ;ENDFOLD (USER INI)
+;ENDFOLD (INI)
+
+;FOLD 初始化变量
+FOR i = 1 TO 12 STEP 1
+   ;insert your code here
+   receivedStr[i] = 0
+ENDFOR
+;ENDFOLD (初始化变量)
+
+;FOLD 将 EKI 与外部系统连接的通道初始化，随后打开通道
+RET = EKI_Init("ServerXML")
+RET = EKI_Open("ServerXML")
+;ENDFOLD (将 EKI 与外部系统连接的通道初始化，随后打开通道)
+
+; 当程序块为 Model 时，需要 SPTP 指令运动至 home 点
+;FOLD SPTP HOME Vel=100 % DEFAULT ;%{PE}
+;FOLD Parameters ;%{h}
+;Params IlfProvider=kukaroboter.basistech.inlineforms.movement.spline; Kuka.IsGlobalPoint=False; Kuka.PointName=HOME; Kuka.BlendingEnabled=False; Kuka.MoveDataPtpName=DEFAULT; Kuka.VelocityPtp=100; Kuka.VelocityFieldEnabled=True; Kuka.CurrentCDSetIndex=0; Kuka.MovementParameterFieldEnabled=True; IlfCommand=SPTP
+;ENDFOLD
+SPTP XHOME WITH $VEL_AXIS[1] = SVEL_JOINT(100.0), $TOOL = STOOL2(FHOME), $BASE = SBASE(FHOME.BASE_NO), $IPO_MODE = SIPO_MODE(FHOME.IPO_FRAME), $LOAD = SLOAD(FHOME.TOOL_NO), $ACC_AXIS[1] = SACC_JOINT(PDEFAULT), $APO = SAPO_PTP(PDEFAULT), $GEAR_JERK[1] = SGEAR_JERK(PDEFAULT), $COLLMON_TOL_PRO[1] = USE_CM_PRO_VALUES(0)
+;ENDFOLD
+
+; 根据 ServerXML 文件配置，当外部客户端连接到机器人控制系统时，$FLAG[1] 将置位。所以我们等待 $FLAG[1]
+;FOLD WAIT FOR ( FLAG 1 '' )  ;%{PE}
+;FOLD Parameters ;%{h}
+;Params IlfProvider=kukaroboter.basistech.inlineforms.logics.waitfor; Kuka.WaitLogicTerm1=None; Kuka.WaitForNot1=False; Kuka.WaitLogicOp2.Term1=None; Kuka.WaitForNot2.Term1=False; Kuka.WaitForSysVar2.Term1=FLAG; Kuka.WaitForIndex2.Term1=1; Kuka.WaitForIndexName2.Term1=; Kuka.WaitForTermNumbers=1; Kuka.WaitForOpNumbers=2; Kuka.WaitForCont=False
+;ENDFOLD
+WAIT FOR  ( $FLAG[1] )
+;ENDFOLD
+
+; 根据 ServerXML 文件配置，当外部客户端发送数据时，$FLAG[2] 将置位。所以我们等待 $FLAG[2]
+;FOLD WAIT FOR ( FLAG 2 '' )  ;%{PE}
+;FOLD Parameters ;%{h}
+;Params IlfProvider=kukaroboter.basistech.inlineforms.logics.waitfor; Kuka.WaitLogicTerm1=None; Kuka.WaitForNot1=False; Kuka.WaitLogicOp2.Term1=None; Kuka.WaitForNot2.Term1=False; Kuka.WaitForSysVar2.Term1=FLAG; Kuka.WaitForIndex2.Term1=2; Kuka.WaitForIndexName2.Term1=; Kuka.WaitForTermNumbers=1; Kuka.WaitForOpNumbers=2; Kuka.WaitForCont=False
+;ENDFOLD
+WAIT FOR  ( $FLAG[2] )
+;ENDFOLD
+
+; 读取接收到的数据并将其保存到全局字符串变量 receivedStr 中
+RET = EKI_GetString("ServerXML","Ext/Msg",receivedStr[])
+; 将 $FLAG[2] 重新复位
+$FLAG[2] = FALSE
+
+; FOLD 向连接写入数据并向外部程序发送数据
+RET = EKI_SetString("ServerXML", "Robot/Ack", "Hello PC!")
+RET = EKI_Send("ServerXML", "Robot")
+; ENDFOLD (向连接写入数据并向外部程序发送数据)
+
+; 由于将 EKI 配置为服务器，所以机器人控制系统期待通道由外部客户端关闭。
+wait for $FLAG[1]==FALSE
+
+; 删除通道
+RET=EKI_Clear("ServerXML")
+
+;FOLD SPTP HOME Vel=100 % DEFAULT ;%{PE}
+;FOLD Parameters ;%{h}
+;Params IlfProvider=kukaroboter.basistech.inlineforms.movement.spline; Kuka.IsGlobalPoint=False; Kuka.PointName=HOME; Kuka.BlendingEnabled=False; Kuka.MoveDataPtpName=DEFAULT; Kuka.VelocityPtp=100; Kuka.VelocityFieldEnabled=True; Kuka.CurrentCDSetIndex=0; Kuka.MovementParameterFieldEnabled=True; IlfCommand=SPTP
+;ENDFOLD
+SPTP XHOME WITH $VEL_AXIS[1] = SVEL_JOINT(100.0), $TOOL = STOOL2(FHOME), $BASE = SBASE(FHOME.BASE_NO), $IPO_MODE = SIPO_MODE(FHOME.IPO_FRAME), $LOAD = SLOAD(FHOME.TOOL_NO), $ACC_AXIS[1] = SACC_JOINT(PDEFAULT), $APO = SAPO_PTP(PDEFAULT), $GEAR_JERK[1] = SGEAR_JERK(PDEFAULT), $COLLMON_TOL_PRO[1] = USE_CM_PRO_VALUES(0)
+;ENDFOLD
+
+END
