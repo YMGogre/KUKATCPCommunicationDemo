@@ -26,7 +26,7 @@ RET = EKI_Init("ClientXML")
 RET = EKI_Open("ClientXML")
 ;ENDFOLD (将 EKI 与外部系统连接的通道初始化，随后打开通道并与服务器连接)
 
-; 当程序块为 Model 时，需要 SPTP 指令运动至 home 点
+; 在 .src 文件中，SPTP HOME 是必要的。出于安全考虑，机械臂需要处于预期的起始位置再继续执行后续指令
 ;FOLD SPTP HOME Vel=100 % DEFAULT ;%{PE}
 ;FOLD Parameters ;%{h}
 ;Params IlfProvider=kukaroboter.basistech.inlineforms.movement.spline; Kuka.IsGlobalPoint=False; Kuka.PointName=HOME; Kuka.BlendingEnabled=False; Kuka.MoveDataPtpName=DEFAULT; Kuka.VelocityPtp=100; Kuka.VelocityFieldEnabled=True; Kuka.CurrentCDSetIndex=0; Kuka.MovementParameterFieldEnabled=True; IlfCommand=SPTP

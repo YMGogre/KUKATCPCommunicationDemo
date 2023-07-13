@@ -33,17 +33,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="STTech.BytesIO.Core, Version=2.12.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\STTech.BytesIO.Core.2.12.1\lib\net45\STTech.BytesIO.Core.dll</HintPath>
+    <Reference Include="STTech.BytesIO.Core, Version=2.12.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STTech.BytesIO.Core.2.12.9\lib\net45\STTech.BytesIO.Core.dll</HintPath>
     </Reference>
-    <Reference Include="STTech.BytesIO.Tcp, Version=2.12.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\STTech.BytesIO.Tcp.2.12.1\lib\net45\STTech.BytesIO.Tcp.dll</HintPath>
+    <Reference Include="STTech.BytesIO.Tcp, Version=2.12.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STTech.BytesIO.Tcp.2.12.9\lib\net45\STTech.BytesIO.Tcp.dll</HintPath>
     </Reference>
-    <Reference Include="STTech.CodePlus, Version=1.5.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\STTech.CodePlus.1.5.10\lib\net45\STTech.CodePlus.dll</HintPath>
+    <Reference Include="STTech.CodePlus, Version=1.5.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\STTech.CodePlus.1.5.13\lib\net45\STTech.CodePlus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

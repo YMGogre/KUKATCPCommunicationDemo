@@ -211,7 +211,7 @@ namespace KUKA_TCP_Demo
         }
 
         /// <summary>
-        /// 生成指定的 XML 字符串，本方法对应的 XML 配置文件定义请参阅 <see href="https://github.com/YMGogre/KUKATCPCommunicationDemo/blob/master/XmlTransmit.xml">这里</see><br/>
+        /// 生成指定的 XML 字符串，本方法对应的 XML 配置文件定义请参阅 <see href="https://github.com/YMGogre/KUKATCPCommunicationDemo/blob/master/%E6%9C%BA%E6%A2%B0%E8%87%82%E4%BD%9C%E4%B8%BA%E5%AE%A2%E6%88%B7%E7%AB%AF/ClientXML.xml">这里</see><br/>
         /// <example>
         /// 下面是一个调用该方法的范例：<br/>
         /// <c>XMLConvert("Hello World!")</c>
